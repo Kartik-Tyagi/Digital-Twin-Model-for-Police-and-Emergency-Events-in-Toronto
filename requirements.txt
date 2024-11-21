@@ -2,3 +2,5 @@ torch
 ipykernel
 torchvision
 matplotlib
+pandas
+scikit-learn
