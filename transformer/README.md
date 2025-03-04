@@ -1,3 +1,30 @@
+Utilizing a transformer model to effectively read and analyze tabular data. Transformer is generally not suited for tabular data; however, Amazon researchers created a FT Transformer model for that very purpose. I will be working with the model they built and attempt to train and modify it to match my purpose
+
+I have forked the git repository for the transformer and am utilizing that model. The readme and the link for the git page is below:
+
+Link to FT Transformer Git page: https://github.com/lucidrains/tab-transformer-pytorch
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <img src="./tab.png" width="250px"></img>
 
 ## Tab Transformer
