@@ -4,3 +4,8 @@ torchvision
 matplotlib
 pandas
 scikit-learn
+openpyxl
+requests
+beautifulsoup4
+selenium
+webdriver_manager
