@@ -200,27 +200,38 @@ def main():
     medium_risk = []
     low_risk = []
     
-    for i in range(24):
-        temp_max, temp_high, temp_medium, temp_low = classify_risk(wards, i, high_threshold, low_threshold)
-        max_risk.append(temp_max)
-        high_risk.append(temp_high)
-        medium_risk.append(temp_medium)
-        low_risk.append(temp_low)
+    max_risk, high_risk, medium_risk, low_risk = classify_risk(wards, high_threshold, low_threshold)
     
     
-    manual_min_units = find_min_units(wards, max_risk, high_risk)
+    #manual_min_units = find_min_units(wards, max_risk, high_risk)
     
     G = nx.Graph()
 
-    for ward in high_risk[hour]:
+    for ward in high_risk:
         G.add_node(ward.id)
+        
+    for ward in max_risk:
+        G.add_node(ward.id)
+        G.add_node(ward.id*-1)
 
-    for ward in high_risk[hour]:
+    for ward in high_risk:
         for neighbor in ward.adjacent:
-            if neighbor in high_risk[hour]:
+            if neighbor in high_risk:
                 G.add_edge(ward.id, neighbor.id)
+    
+    for ward in max_risk:
+        G.add_edge(ward.id, ward.id*-1)
+        for neighbor in ward.adjacent:
+            if neighbor in high_risk:
+                G.add_edge(ward.id, neighbor.id)
+                G.add_edge(ward.id*-1, neighbor.id)
+            elif neighbor in max_risk:
+                G.add_edge(ward.id, neighbor.id)
+                G.add_edge(ward.id*-1, neighbor.id)
+                G.add_edge(ward.id, neighbor.id*-1)
+                G.add_edge(ward.id*-1, neighbor.id*-1)
     
     num_patrol_units, patrol_routes = optimize_patrol_routes(G)
     final_routes = assign_patrols_to_medium_risk(G, patrol_routes, medium_risk)
 
-    return final_routes
+    return num_patrol_units, final_routes
